@@ -6,9 +6,16 @@ To create a high-fidelity, real-time command center where autonomous AI agents (
 ## Planned Features
 
 ### High Priority
-- [ ] **Frontend Dashboard**: Real-time Kanban board using Next.js 14 and shadcn/ui.
-  - **Addresses**: Need for visual oversight of agent activity.
+- [/] **Frontend Dashboard**: Real-time Kanban board using Next.js 14 and shadcn/ui.
+  - **Status**: Core MVP implemented in `mission-control-dashboard/`
+  - [x] Kanban Board with drag-drop
+  - [x] Agent Status grid
+  - [x] Activity Feed with filters
+  - [x] 11/13 Agent avatars
+  - [ ] Connect to Convex real-time subscriptions
+  - [ ] Generate remaining 2 avatars (Senku, Demiurge)
 - [ ] **Real-time Heartbeat Monitoring**: Visual indicators for agent 'online/working/idle' states.
+  - **Addresses**: Need for live agent activity visibility.
 - [ ] **Telegram Integration**: Direct approval flow and notifications for the User.
 
 ### Medium Priority
@@ -41,6 +48,7 @@ To create a high-fidelity, real-time command center where autonomous AI agents (
 ---
 
 ## Recently Completed
+- [x] **Frontend Dashboard MVP**: Kanban, Agents, Activity pages implemented with 11 avatars. (2026-02-10)
 - [x] **Backend Logic Initialized**: 7 core modules (agents, tasks, boards, etc.) implemented. (2026-02-10)
 - [x] **Lelouch Refinement**: Persona updated to "Strategic Partner" with "Crisis Module". (2026-02-10)
 - [x] **Database Seeded**: 13 Agents and 4 Boards created in Convex. (2026-02-10)
