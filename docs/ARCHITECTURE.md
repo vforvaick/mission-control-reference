@@ -50,8 +50,8 @@ Every agent follows this loop on each wake cycle:
 └─────────────────┬───────────────────┘
                   │
 ┌─────────────────▼───────────────────┐
-│      LELOUCH (Supreme Commander)    │
-│   Strategic Partner, System Arch    │
+│      LELOUCH (Supreme Strategist)   │
+│   Strategic Partner, Orchestrator   │
 └─────────────────┬───────────────────┘
                   │
 ┌─────────────────▼───────────────────┐
@@ -71,7 +71,7 @@ Every agent follows this loop on each wake cycle:
 ```
 
 ### Layer Responsibilities:
-- **Strategic (Lelouch)**: Global context, escalations, productivity monitoring
+- **Strategic (Lelouch)**: Global context, orchestration, "Crisis Mode" decisions
 - **Secretary (C.C.)**: User reminders, logistics, simple tactical tasks
 - **Tactical (Leads)**: Domain-specific management (Office, Trading, Personal, Deployment)
 - **Operational (Specialists)**: Execution (Backend, Frontend, Research, Data)
@@ -107,6 +107,7 @@ This ensures no skill is left idle — specialists migrate to where they're need
 
 ```
 Specialist → (SOP Gap) → Lead → (Strategic Gap) → Lelouch → (Vision Gap) → User
+Demiurge (Security/Integrity) --------------------------→ (Critical Fail) → User
 ```
 
-All "Context Gaps" escalate upward. Agents cannot hallucinate strategic context.
+All "Context Gaps" escalate upward. "Integrity Risks" escalate directly via Demiurge.
