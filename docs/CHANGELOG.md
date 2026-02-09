@@ -13,6 +13,7 @@ All notable changes to the Mission Control Reference will be documented in this 
 
 ### Added
 - **Escalation Protocol**: Added Direct Escalation Channel for Demiurge (Security) to User for system integrity issues, bypassing Lelouch.
+- **Nickname Protocol**: Added "Lulu" as a permitted nickname for User & C.C. only (Strictly forbidden for others).
 
 ### Reference
 - Session: Refine Lelouch Persona
