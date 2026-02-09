@@ -14,15 +14,26 @@ This project was inspired by [@pbteja1998's tweet](https://x.com/pbteja1998/stat
 
 | Folder | Contents |
 |--------|----------|
-| `/docs` | Architecture, Personas, Protocols |
-| `/database` | Convex schema (distilled, clean) |
-| `/core-logic` | Heartbeat loop, Agent coordination specs |
+| `/docs` | Architecture, Personas, Protocols, **Roadmap**, **Handover** |
+| `/database` | Convex schema & **Core Logic implementations (TS)** |
+| `/core-logic` | Heartbeat loop, Agent coordination specs (Markdown) |
 | `/ui-landscape` | Kanban, Threaded Comments requirements |
-| `/snippets` | Verified code snippets |
+| `/snippets` | Verified code snippets (Persona ingress) |
 | `/integrations` | Telegram webhook, Convex API specs |
 | `/skills` | Skills matrix, Tool catalog |
 | `/assets` | Visual references, Screenshots |
 | `/ops` | Scaling notes, Known issues |
+
+---
+
+## Current Status: OPERATIONAL 🚀
+
+The backend logic is fully implemented and deployed to Convex.
+
+- **Convex Deployment**: `ceaseless-bullfrog-373`
+- **Agents**: 13 Active Agents (Lelouch, C.C., 4 Leads, 7 Specialists)
+- **Boards**: Office, Trading, Personal, Deployment
+- **Frontend**: [Planning Handover Document](./docs/HANDOVER_FRONTEND.md) exists; Next.js setup in progress.
 
 ---
 
