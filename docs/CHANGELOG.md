@@ -2,6 +2,29 @@
 
 All notable changes to the Mission Control Reference will be documented in this file.
 
+## [2026-02-10] - Phase 1 Deployment: Schema + Core Agents
+
+### Added
+- **Task Decomposition Schema**: `createdBy`, `parentTaskId`, `acceptanceCriteria`, `requiredSkills` + indexes (`by_parent`, `by_creator`)
+- **Agent Health Schema**: `layer`, `skills`, `behavior`, `dormant`, `healthMetrics` (tasksCompleted, tasksFailed, avgCompletionTime, contextResets)
+- **Tasks API**: `getSubTasks` query, decomposition args in `create` mutation
+- **Agents API**: `getAvailableForSkills`, `getActive` queries, `updateHealthMetrics` mutation
+- **Seed**: 7 active + 6 dormant agents with skills/layer/behavior
+- **VPS KB**: `kb/trading`, `kb/devops`, `kb/research` directories
+- **VPS CC Reports**: `cc-reports/squad-status.md`, `daily-digest.md`, `scaling-recs.md`
+- **OpenClaw Agents**: `main` (Lelouch), `cc` (C.C.), `meliodas`, `demiurge` — each with identity + model routing
+- **CLIproxy Auth**: `cliproxy:default` profile → fight-dos:8317
+- **Cron Heartbeats**: `lelouch-heartbeat` (10m), `cc-heartbeat` (30m, silent)
+
+### Files Modified
+- `database/schema.ts`, `database/tasks.ts`, `database/agents.ts`, `database/seed.ts`
+- VPS: `~/.openclaw/openclaw.json`, agent identity files, cron jobs
+
+### Reference
+- Session: d339887d-4884-4500-bdb6-809a6c662b81
+
+---
+
 ## [2026-02-10] - Multi-Agent Architecture Redesign
 
 ### Changed
