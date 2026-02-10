@@ -6,14 +6,14 @@ To create a high-fidelity, real-time command center where 7 autonomous AI agents
 ## Planned Features
 
 ### High Priority
-- [ ] **Phase 1: Core Agents** — Deploy @lelouch, @cc, @meliodas, @demiurge
+- [x] **Phase 1: Core Agents** — Deploy @lelouch, @cc, @meliodas, @demiurge ✅
   - Schema changes: `createdBy`, `parentTaskId`, `acceptanceCriteria`, `requiredSkills` on tasks
-  - Schema changes: `skills`, `behavior`, `healthMetrics` on agents
+  - Schema changes: `layer`, `skills`, `behavior`, `dormant`, `healthMetrics` on agents
   - KB + cc-reports directories on VPS
-  - CLIproxy fallback wiring
-- [ ] **Phase 2: Trading Team** — Deploy @shiroe, @rimuru, @senku
-  - Autonomous iteration loop for trading strategy research
-  - Seed KB with existing data catalog
+  - CLIproxy auth profile wired
+- [x] **Phase 2: Trading Team** — Deploy @shiroe, @rimuru, @senku ✅
+  - All 7 agents on OpenClaw with identity + model routing
+  - Heartbeat crons: Lelouch (10m), C.C. (30m silent)
 - [/] **Frontend Dashboard**: Real-time Kanban board using Next.js and shadcn/ui.
   - **Status**: Core MVP implemented in `mission-control-dashboard/`
   - [x] Kanban Board with drag-drop
@@ -50,14 +50,14 @@ To create a high-fidelity, real-time command center where 7 autonomous AI agents
   - **Goal**: Implement automatic migrations/seeding.
 - **Hardcoded Snippets**: Some persona logic is duplicated between `PERSONAS.md` and `snippets/`.
   - **Goal**: Create a single source of truth for agent prompts.
-- **13→7 Agent Migration**: Dashboard currently shows 13 agents but only 7 are active.
-  - **Goal**: Update seed.ts to reflect 7 active + 6 dormant agents.
+- ~~**13→7 Agent Migration**: Dashboard currently shows 13 agents but only 7 are active.~~ → ✅ Resolved: seed.ts updated to 7 active + 6 dormant.
 
 ---
 
 ## Recently Completed
+- [x] **Phase 1+2 Deployment**: All 7 agents on OpenClaw, schema changes, KB, CLIproxy, cron heartbeats. (2026-02-10)
 - [x] **Multi-Agent Architecture Redesign**: 7 active agents, KB, model tiering, autonomous loops. (2026-02-10)
 - [x] **Frontend Dashboard MVP**: Kanban, Agents, Activity pages implemented with 11 avatars. (2026-02-10)
 - [x] **Backend Logic Initialized**: 7 core modules (agents, tasks, boards, etc.) implemented. (2026-02-10)
 - [x] **Lelouch Refinement**: Persona updated to "Strategic Partner" with "Crisis Module". (2026-02-10)
-- [x] **Database Seeded**: 13 Agents and 4 Boards created in Convex. (2026-02-10)
+- [x] **Database Seeded**: 7 Active + 6 Dormant Agents and 4 Boards in Convex. (2026-02-10)

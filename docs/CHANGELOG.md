@@ -2,6 +2,21 @@
 
 All notable changes to the Mission Control Reference will be documented in this file.
 
+## [2026-02-10] - Phase 2 Deployment: Trading Team
+
+### Added
+- **Shiroe** (`cliproxy/gemini-3-pro-high`): Trading Architect — orchestrates strategy loops
+- **Rimuru** (`cliproxy/gemini-3-flash`): Data Engineer + Backtester — data collection, validation
+- **Senku** (`cliproxy/claude-sonnet-4-5-thinking`): Research Specialist — deep research, pattern discovery
+
+### Files Modified
+- VPS: `~/.openclaw/openclaw.json`, agent identity files for shiroe/rimuru/senku
+
+### Reference
+- Session: d339887d-4884-4500-bdb6-809a6c662b81
+
+---
+
 ## [2026-02-10] - Phase 1 Deployment: Schema + Core Agents
 
 ### Added
