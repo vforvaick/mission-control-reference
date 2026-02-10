@@ -43,6 +43,11 @@ export default defineSchema({
             v.literal("urgent")
         ),
         assigneeId: v.optional(v.id("agents")),
+        // Task decomposition
+        createdBy: v.optional(v.union(v.id("agents"), v.literal("human"))),
+        parentTaskId: v.optional(v.id("tasks")),
+        acceptanceCriteria: v.optional(v.string()),
+        requiredSkills: v.optional(v.array(v.string())),
         createdAt: v.number(),
         updatedAt: v.number(),
         claimedAt: v.optional(v.number()),
@@ -67,7 +72,9 @@ export default defineSchema({
         .index("by_board", ["boardId"])
         .index("by_board_status", ["boardId", "status"])
         .index("by_assignee", ["assigneeId"])
-        .index("by_status", ["status"]),
+        .index("by_status", ["status"])
+        .index("by_parent", ["parentTaskId"])
+        .index("by_creator", ["createdBy"]),
 
     // ═══════════════════════════════════════════════════════════
     // COMMENTS - Threaded discussions on tasks
@@ -93,6 +100,16 @@ export default defineSchema({
         avatar: v.optional(v.string()),
         role: v.string(),
         personality: v.optional(v.string()),
+        // Agent capabilities
+        layer: v.optional(v.union(
+            v.literal("strategic"),
+            v.literal("analyst"),
+            v.literal("lead"),
+            v.literal("specialist")
+        )),
+        skills: v.optional(v.array(v.string())),
+        behavior: v.optional(v.string()),
+        dormant: v.optional(v.boolean()), // true = available but not active
         boardIds: v.array(v.id("boards")), // Assigned domains
         leadBoardId: v.optional(v.id("boards")), // For Area Leads
         status: v.union(
@@ -104,6 +121,15 @@ export default defineSchema({
         ),
         lastHeartbeat: v.number(),
         currentTaskId: v.optional(v.id("tasks")),
+        // Health metrics (updated by C.C.)
+        healthMetrics: v.optional(v.object({
+            tasksCompleted: v.number(),
+            tasksFailed: v.number(),
+            avgCompletionTime: v.number(),
+            contextResets: v.number(),
+            lastErrorAt: v.optional(v.number()),
+            updatedAt: v.number(),
+        })),
         // Session memory for context continuity
         workingMemory: v.optional(v.object({
             lastContext: v.optional(v.string()),

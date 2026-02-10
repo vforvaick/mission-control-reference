@@ -41,52 +41,82 @@ Every agent follows this loop on each wake cycle:
 
 ---
 
-## 4-Layer Organizational Hierarchy
+## 3-Layer Active Hierarchy (7 Agents)
 
 ```
-┌─────────────────────────────────────┐
-│         FAIQ (User/Visionary)       │
-│         Final Authority             │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│      LELOUCH (Supreme Strategist)   │
-│   Strategic Partner, Orchestrator   │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│         C.C. (Chief of Staff)       │
-│   Logistics, Memory, Data Fetching  │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│           AREA LEADS (VPs)          │
-│  Lena, Shiroe, Ainz, Meliodas       │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│         SPECIALISTS (Executors)     │
-│  Killua, Yor, Rimuru, Senku, etc.   │
-└─────────────────────────────────────┘
+                        FAIQ (Vision)
+                             │
+                     ┌───────▼───────┐
+                     │   @lelouch    │  5min HB | gpt-5.3-codex
+                     │  STRATEGIC    │  PA + Brainstorm + Decide
+                     └───────┬───────┘
+                             │ reads cc-reports/ (no chat)
+                     ┌───────▼───────┐
+                     │     @cc       │  30min HB | gemini-3-pro-high
+                     │  OPERATIONAL  │  Silent Analyst, writes reports
+                     └───────┬───────┘
+                             │
+           ┌─────────────────┼─────────────────┐
+           ▼                 ▼                 ▼
+       @meliodas         @shiroe          @demiurge
+       DevOps Lead       Trading Arch     Security
+       opus-think        gpt-5.3          opus-think
+       10min HB          10min HB         30min HB
+                             │
+                     ┌───────┴───────┐
+                     ▼               ▼
+                 @rimuru          @senku
+                 Data/Backtest    Research
+                 pro-high         opus-think
+                 15min HB         On-demand
 ```
 
 ### Layer Responsibilities:
-- **Strategic (Lelouch)**: Global context, orchestration, "Crisis Mode" decisions
-- **Secretary (C.C.)**: User reminders, logistics, simple tactical tasks
-- **Tactical (Leads)**: Domain-specific management (Office, Trading, Personal, Deployment)
-- **Operational (Specialists)**: Execution (Backend, Frontend, Research, Data)
+- **Strategic (@lelouch)**: Personal assistant, brainstorm with Faiq, resource planning, assign to Leads, crisis decisions
+- **Analyst (@cc)**: Agent health monitoring, resource reports (living documents), daily digest, scaling alerts. Does NOT chat with Lelouch — writes `cc-reports/` files that Lelouch reads instantly
+- **Leads (@meliodas, @shiroe)**: Domain execution. Meliodas handles all DevOps solo. Shiroe orchestrates Trading loops via specialists
+- **Specialists (@rimuru, @senku, @demiurge)**: Execute research, backtests, security audits. Write results to KB
+
+### Task Decomposition Flow:
+```
+Faiq (vision) → @lelouch (strategic goal) → Lead (tactical tasks) → Specialist (execution)
+```
+
+### Dormant Agents (Spawn on demand):
+- @killua (Backend), @yor (Frontend) — when Meliodas overwhelmed
+- @lena (Office Lead), @ainz (Personal Lead) — if workload demands
+- @[executor] — when trading strategy proven for live market
 
 ---
 
-## Skill-Based Routing
+## Knowledge Base (KB)
 
-Agents are not locked to boards. On every heartbeat:
-1. Scan **ALL** boards
-2. Calculate **Expertise Match Score** (0.0 - 1.0)
-3. Weight global priority + skill relevance
-4. Route to the "winning" board
+Shared persistent library at `~/.openclaw/workspace/kb/`:
 
-This ensures no skill is left idle — specialists migrate to where they're needed most.
+```
+kb/
+├── trading/strategies, backtests, market-notes, failed-experiments
+├── devops/runbooks, incident-log.md, infra-inventory.md
+└── research/papers, findings.md
+```
+
+**Rules**: Read before work. Write after work. Version strategies. Cross-reference.
+
+---
+
+## Model Tiering + Fallbacks
+
+| Agent | HB Scan | Primary | Fallback Chain |
+|-------|---------|---------|---------------|
+| @lelouch | gemini-3-flash | gpt-5.3-codex | → pro-high → 5.2 |
+| @cc | gemini-3-flash | gemini-3-pro-high | → 5.2 → 5.1-mini |
+| @meliodas | gemini-3-flash | opus-4.5-thinking | → 5.3 → pro-high |
+| @shiroe | gemini-3-flash | gpt-5.3-codex | → pro-high → 5.2 |
+| @demiurge | gemini-3-flash | opus-4.5-thinking | → 5.3 → pro-high |
+| @rimuru | gemini-3-flash | gemini-3-pro-high | → 5.2 → 5.1-mini |
+| @senku | - | opus-4.5-thinking | → 5.3 → pro-high |
+
+**Providers**: Codex (fight-uno), CLIproxy (fight-dos:8317)
 
 ---
 
@@ -106,8 +136,7 @@ This ensures no skill is left idle — specialists migrate to where they're need
 ## Escalation Flow
 
 ```
-Specialist → (SOP Gap) → Lead → (Strategic Gap) → Lelouch → (Vision Gap) → User
-Demiurge (Security/Integrity) --------------------------→ (Critical Fail) → User
+Specialist → Lead → Lelouch → Faiq
+Demiurge (Security) ────────→ Faiq (Critical bypass)
+C.C. (Health Alert) → Lelouch → Faiq (if scaling needed)
 ```
-
-All "Context Gaps" escalate upward. "Integrity Risks" escalate directly via Demiurge.

@@ -2,6 +2,45 @@
 
 All notable changes to the Mission Control Reference will be documented in this file.
 
+## [2026-02-10] - Multi-Agent Architecture Redesign
+
+### Changed
+- **Agent Structure**: Redesigned from 13-agent full spec to **7 active agents** with 6 dormant (spawn on demand)
+- **C.C. Role**: From "Chief of Staff" to **Silent Analyst** — writes living documents (`cc-reports/`), no chat with Lelouch
+- **Lelouch Role**: Now also **Personal Assistant** (reminders, scheduling) + Resource Planning
+- **Meliodas**: Absorbs ALL dev/devops skills (solo lead, no specialists)
+- **Shiroe**: Now **Trading Architect** (orchestrate only, does not execute)
+- **Hierarchy**: From 4-layer to **3-layer active** (Strategic → Leads → Specialists)
+
+### Added
+- **Knowledge Base (KB)**: Shared `kb/` directory for persistent learning across sessions
+- **Model Tiering**: Per-agent LLM model assignment with fallback chains
+  - Codex models via fight-uno, CLIproxy models (Gemini/Opus) via fight-dos
+  - Heartbeat scan: gemini-3-flash (all agents)
+  - Fallback: quota-exceeded auto-switch
+- **Task Decomposition**: Vision → Strategic Goal → Tactical Tasks → Execution
+  - Schema additions: `createdBy`, `parentTaskId`, `acceptanceCriteria`, `requiredSkills`
+- **Agent Health Metrics**: `skills`, `behavior`, `healthMetrics` fields on agents table
+- **Autonomous Iteration Loop**: Shiroe orchestrates research/backtest loops without human intervention
+- **Scaling Decision Matrix**: Trigger-based rules for spawning new agents
+
+### Architecture Decisions
+- **Lelouch ↔ C.C.**: File-based (instant) rather than chat-based (30min wait)
+- **Shiroe as orchestrator**: Keeps context lean for long-running research loops
+- **KB as bridge**: Enables specialists to execute-and-forget while knowledge persists
+- **Dormant agents**: @killua, @yor, @lena, @ainz, @albedo, @kazuma available for future scaling
+
+### Files Modified
+- `docs/ARCHITECTURE.md` — Updated hierarchy, added KB + model tiering sections
+- `docs/PERSONAS.md` — Restructured: 7 active + 6 dormant agents
+- `docs/CHANGELOG.md` — This entry
+- `docs/ROADMAP.md` — Updated with deployment phases
+
+### Reference
+- Session: d339887d-4884-4500-bdb6-809a6c662b81
+
+---
+
 ## [2026-02-10] - Mission Control Dashboard Frontend Implemented
 
 ### Added

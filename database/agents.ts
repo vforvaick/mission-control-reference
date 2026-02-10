@@ -29,6 +29,28 @@ export const getById = query({
     },
 });
 
+// Resource planning: find agents with matching skills
+export const getAvailableForSkills = query({
+    args: { requiredSkills: v.array(v.string()) },
+    handler: async (ctx, args) => {
+        const agents = await ctx.db.query("agents").collect();
+        return agents.filter(a =>
+            a.status !== "offline" &&
+            !a.dormant &&
+            args.requiredSkills.some(s => a.skills?.includes(s))
+        );
+    },
+});
+
+// Get all active (non-dormant) agents
+export const getActive = query({
+    args: {},
+    handler: async (ctx) => {
+        const agents = await ctx.db.query("agents").collect();
+        return agents.filter(a => !a.dormant);
+    },
+});
+
 // ═══════════════════════════════════════════════════════════
 // MUTATIONS
 // ═══════════════════════════════════════════════════════════
@@ -146,6 +168,32 @@ export const releaseTask = mutation({
             status: "idle",
         });
 
+        return { success: true };
+    },
+});
+
+// Updated by C.C. on her 30min heartbeat
+export const updateHealthMetrics = mutation({
+    args: {
+        handle: v.string(),
+        healthMetrics: v.object({
+            tasksCompleted: v.number(),
+            tasksFailed: v.number(),
+            avgCompletionTime: v.number(),
+            contextResets: v.number(),
+            lastErrorAt: v.optional(v.number()),
+            updatedAt: v.number(),
+        }),
+    },
+    handler: async (ctx, args) => {
+        const agent = await ctx.db
+            .query("agents")
+            .withIndex("by_handle", (q) => q.eq("handle", args.handle))
+            .first();
+
+        if (!agent) throw new Error(`Agent ${args.handle} not found`);
+
+        await ctx.db.patch(agent._id, { healthMetrics: args.healthMetrics });
         return { success: true };
     },
 });

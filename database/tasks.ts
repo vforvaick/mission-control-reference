@@ -43,6 +43,16 @@ export const getByStatus = query({
     },
 });
 
+export const getSubTasks = query({
+    args: { parentTaskId: v.id("tasks") },
+    handler: async (ctx, args) => {
+        return await ctx.db
+            .query("tasks")
+            .withIndex("by_parent", (q) => q.eq("parentTaskId", args.parentTaskId))
+            .collect();
+    },
+});
+
 // ═══════════════════════════════════════════════════════════
 // MUTATIONS
 // ═══════════════════════════════════════════════════════════
@@ -60,6 +70,12 @@ export const create = mutation({
         ),
         tags: v.optional(v.array(v.string())),
         dueDate: v.optional(v.number()),
+        // Task decomposition fields
+        createdBy: v.optional(v.union(v.id("agents"), v.literal("human"))),
+        parentTaskId: v.optional(v.id("tasks")),
+        acceptanceCriteria: v.optional(v.string()),
+        requiredSkills: v.optional(v.array(v.string())),
+        assigneeId: v.optional(v.id("agents")),
     },
     handler: async (ctx, args) => {
         const existingTasks = await ctx.db
@@ -78,6 +94,11 @@ export const create = mutation({
             order,
             tags: args.tags,
             dueDate: args.dueDate,
+            createdBy: args.createdBy ?? "human",
+            parentTaskId: args.parentTaskId,
+            acceptanceCriteria: args.acceptanceCriteria,
+            requiredSkills: args.requiredSkills,
+            assigneeId: args.assigneeId,
             createdAt: Date.now(),
             updatedAt: Date.now(),
         });
